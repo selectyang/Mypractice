@@ -1,0 +1,55 @@
+
+body{
+	background-color: #fff2e3;
+	text-align: center;
+	color: #87968e;
+	font-family: "\5FAE\8F6F\96C5\9ED1", Arial;
+	font-size: 14px;
+}
+
+a {
+	text-decoration: none;
+	color: #72b890;
+}
+
+.header h1 {
+	font-size: 42px;
+	margin: 30px;
+}
+
+.layout {
+	width: 800px;
+	margin: 0 auto;
+}
+
+
+
+.buttons li {
+	display: inline-block;
+	list-style: none;
+}
+
+
+.button {
+	margin: 4px;
+	padding: 6px 15px;
+	color: #fff;
+	background-color: #72b890;
+	text-align: center;
+	border-radius: 2px;
+
+}
+
+
+.activation {
+	opacity: 0.8;
+}
+
+.button:hover{
+	opacity: 0.6;
+}
+
+.buttons {
+	margin: 40px 0;
+}
+
