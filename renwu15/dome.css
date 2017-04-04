@@ -293,7 +293,8 @@ ul li {
   height: 100%;
   position: absolute;
   top: -1px;
-  left: 50%;
+  left: 50%; /*绝对定位实现 ，left： 50% ，top ： 50%定位到class的左上角居中，
+    然后用-margin的方式设置到中心位置*/
 }
 
 
