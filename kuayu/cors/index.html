@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+  <mata charset="utf-8">
+    <title>加载更多</title>
+    <style>
+      ul,
+      li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      
+      #content li {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+      
+      #load-more {
+        display: block;
+        margin: 10px auto;
+        text-align: center;
+        border: 1px solid hotpink;
+        color: hotpink;
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 4px;
+      }
+      
+      #load-more:hover {
+        background: green;
+        color: #fff;
+      }
+      
+      #content>li:hover {
+        background: green;
+        color: #fff;
+      }
+    </style>
+</head>
+
+<body>
+  <div>
+    <ul id="content">
+      <li>news1</li>
+      <li>news2</li>
+    </ul>
+    <a id="load-more" href="#" class="button">加载更多</a>
+  </div>
+
+  <script>
+    var button = document.querySelector('#load-more')
+    var listContent = document.querySelector('#content')
+    var pageIndex = 3
+    var ajaxLocking = true
+
+    button.addEventListener('click', function (e) {
+      e.preventDefault()
+      if(!ajaxLocking) {
+        return;
+      }
+      loadData(insetPage)  //1，将insetPage 函数体传入loadMore中
+    })
+    
+    function loadData(callback){
+      ajax({
+        type: 'get',
+        url: 'http://bf.select.com:8080/loadMore',
+        data: {
+          index: pageIndex,
+          length: 5
+        },
+        onSuccess: callback,   //2，onSuccess 对象的 value 为insetPage 函数体
+        onError: function(){
+          console.log('error')
+        }
+      }) 
+    }
+
+
+    function insetPage(news) {
+      var fragment = document.createDocumentFragment()
+      for (var i = 0; i < news.length; i++) {
+        var node = document.createElement('li')
+        node.innerText = news[i]
+        fragment.appendChild(node)
+      }
+      listContent.appendChild(fragment)
+    }
+
+
+    function ajax(options) {
+      var xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200 || xhr.status === 304) {
+              var result = JSON.parse(xhr.responseText)
+              //insetPage(result)  //创建并并插入页面
+              options.onSuccess(result)  //执行insetPage函数 相当于调用insetPage(result)
+              pageIndex = pageIndex + 5
+              ajaxLocking = true
+            }else{
+              options.onError()
+            }
+          }
+        }
+      var query = '?'
+      for(key in options.data){
+        query += key + '=' + options.data[key] + '&'
+      }
+      query = query.substr(0,query.length-1)
+      xhr.open(options.type, options.url + query, true) 
+      xhr.send()
+      ajaxLocking = false;
+    }
+
+  </script>
+
+</body>
+
+</html>
