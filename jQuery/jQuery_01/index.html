@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery 事件代理</title>
+		<link rel="stylesheet" type="text/css" href="dome.css">
+	</head>
+	<body>
+		<div class="area-navigation">
+			<ul class="sides-navigation">
+				<li class="category">
+					<a class="cate-title" href="#">珠宝玉器</a>
+					<span class="icon-go">></span>
+					<ul class="child-class ">
+						<li><a href="">翡翠</a></li>
+						<li><a href="">玉石</a></li>
+						<li><a href="">宝石</a></li>
+						<li><a href="">水晶</a></li>
+						<li><a href="">玛瑙</a></li>
+						<li><a href="">珍珠</a></li>
+						<li><a href="">钻石</a></li>
+						<li><a href="">琥珀</a></li>
+						<li><a href="">和田</a></li>
+						<li><a href="">琥珀</a></li>
+					</ul>
+				</li>
+				<li class="category">
+					<a class="cate-title" href="#">珠宝玉器</a>
+					<span class="icon-go">></span>
+					<ul class="child-class">
+						<li><a href="">翡翠</a></li>
+						<li><a href="">玉石</a></li>
+						<li><a href="">宝石</a></li>
+						<li><a href="">水晶</a></li>
+						<li><a href="">玛瑙</a></li>
+						<li><a href="">珍珠</a></li>
+					</ul>
+				</li>
+				<li class="category">
+					<a class="cate-title" href="#">珠宝玉器</a>
+					<span class="icon-go">></span>
+					<ul class="child-class">
+						<li><a href="">翡翠</a></li>
+						<li><a href="">玉石</a></li>
+						<li><a href="">宝石</a></li>
+						<li><a href="">水晶</a></li>
+					</ul>
+				</li>
+				<li class="category">
+					<a class="cate-title" href="#">珠宝玉器</a>
+					<span class="icon-go">></span>
+					<ul class="child-class">
+						<li><a href="">翡翠</a></li>
+						<li><a href="">玉石</a></li>
+						<li><a href="">宝石</a></li>
+						<li><a href="">水晶</a></li>
+						<li><a href="">玛瑙</a></li>
+						<li><a href="">珍珠</a></li>
+					</ul>
+				</li>
+				<li class="category">
+					<a class="cate-title" href="#">珠宝玉器</a>
+					<span class="icon-go">></span>
+					<ul class="child-class">
+						<li><a href="">翡翠</a></li>
+						<li><a href="">玉石</a></li>
+						<li><a href="">宝石</a></li>
+						<li><a href="">水晶</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+  		<script>
+			$('.sides-navigation .category').on('mouseenter',function(){
+				//console.log($(this));
+				$(this).addClass('hover')
+			})
+			$('.sides-navigation .category').on('mouseleave',function(){
+				//console.log($(this).text());
+				$(this).removeClass('hover')
+			})
+
+		  </script>
+
+	</body>
+</html>

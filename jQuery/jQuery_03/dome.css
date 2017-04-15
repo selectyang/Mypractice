@@ -1,0 +1,125 @@
+
+ul,li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    color: #777;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.clear_fix:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+.tab {
+    width: 800px;
+    margin: 20px auto;
+}
+
+/*********************************************/
+.head {
+    font-size: 24px;
+    color: #777;
+    line-height: 0;
+}
+    
+/*********************************/
+
+.tab-content {
+    border: 1px solid #fff;
+    width: 702px;
+    margin-bottom: 30px;
+}
+
+.tab-content>li {
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.tab-content .product {
+    float: left;
+    border: 1px solid #eee;
+    font-size: 14px;
+    width: 220px;
+    margin-left: 20px; 
+    margin-top: 20px;
+    text-align: center; 
+    position: relative;
+    opacity: 1;
+}
+
+.tab-content .product .panl {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid red;
+    border-radius: 3px;
+    background: #fff;
+    color: pink;
+    padding: 6px;
+}
+
+.tab-content .cover{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0, 0.3);
+  transition: all 0.3s;
+  opacity: 0;
+}
+
+.tab-content .cover.hover{
+  opacity: 1;
+}
+
+
+.tab-content .product .product-name {
+    height: 37px;
+    padding: 5px 20px 0 20px;
+    text-align: left;
+    font-size: 12px;
+
+}
+
+.tab-content .product .product-price {
+    padding: 0 20px 5px 20px;
+    text-align: left;
+    font-size: 12px;
+    color: red;
+}
+
+.tab-content>li.active {
+    display: block;
+}
+
+    
+/********************************************/
+.button {
+    border: 1px solid red;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+
+
+
+
+
+
+
+
+
