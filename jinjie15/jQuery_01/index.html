@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+  <mata charset="utf-8">
+    <title>jQuery加载更多</title>
+    <style>
+      ul,
+      li {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      
+      #content li {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+      
+      #load-more {
+        display: block;
+        margin: 10px auto;
+        text-align: center;
+        border: 1px solid hotpink;
+        color: hotpink;
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 4px;
+      }
+      
+      #load-more:hover {
+        background: green;
+        color: #fff;
+      }
+      
+      #content>li:hover {
+        background: green;
+        color: #fff;
+      }
+    </style>
+</head>
+
+<body>
+  <div>
+    <ul id="content">
+      <li>news1</li>
+      <li>news2</li>
+    </ul>
+    <a id="load-more" href="#" class="button">加载更多</a>
+  </div>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+  <script>
+
+    var pageIndex = 3;
+    var $button = $('.button');
+    var $listContent = $('#content');
+
+    $button.on('click',function(e){
+      e.preventDefault();
+      $.ajax({
+        url: "http://localhost:8080/loadMore",
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          index: pageIndex,
+          length: 5
+        },
+        success: function(news){
+          insetPage(news);
+        },
+        error: function(){
+          alert('系统异常');
+        }  
+      });
+    })
+
+    function insetPage(news) {
+      var fragment = document.createDocumentFragment()
+      if(news.status === 1){
+        for (var i = 0; i < news.data.length; i++) {
+          var node = document.createElement('li')
+          node.innerText = news.data[i]
+          fragment.appendChild(node)
+        }
+        $listContent.append(fragment);
+        pageIndex += 5;
+      }else {
+        alert('获取数据失败');
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>

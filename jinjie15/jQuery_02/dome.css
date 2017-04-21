@@ -1,0 +1,46 @@
+*,input {
+    color: red;
+    outline: none;
+}
+
+.content {
+  min-width: 700px;
+  height: 900px;
+}
+
+.clearFix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.button {
+    color: #777;
+    font-size: 18px;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.scroll>p {
+    height: 20px;
+    color: #777;
+}
+
+.scroll {
+    width: 300px;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.discolourBox {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+}
+
+.input {
+    border: 1px solid red;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>jQuery 动画与ajax</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<div class="content">
+		<div class="discolour">
+			<p>当点击$btn 时，让 $btn 的背景色变为红色再变为蓝色</p>
+			<button class="button">click</button>
+		</div>
+		<div class="scroll">
+			<p>当窗口滚动时，获取垂直滚动距离</p>
+			<p class="box">scrollValue:</p>
+		</div>
+
+		<div class="box3">
+			<p class="question3">当鼠标放置到$div上，把$div 背景色改为红色， 移出鼠标背景色变为白色
+			</p>
+			<div class="discolourBox"></div>
+		</div>
+
+		<div class="box4">
+			<p>当鼠标激活 input 输入框时让输入框边框变为蓝色，</br>
+				当输入框内容改变时把输入框里的文字小写变为大写，当输入</br>
+				框失去焦点时去掉边框蓝色，控制台展示输入框里的文字</p>
+			<input class="input" type="text" placeholder="acdefg">
+		</div>
+
+		<div class="box5">
+			<p>当选择 select 后，获取用户选择的内容</p>
+			<select name="" class="selectBox">
+				<option value="1">car1</option>
+				<option value="2">car2</option>
+				<option value="3">car3</option>
+				<option value="4">car4</option>
+			</select>
+			<p class="select-p">用户选择的内容是:</p>
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script>
+		var $button = $('.button');
+		$button.on('click', function () {
+			$button.css({ "background": "red", });
+			setTimeout(function () {
+				$button.css({ "background": "green", });
+			}, 600)
+		})
+
+		$(window).on('scroll', function () {
+			var scrollValue = $(window).scrollTop();
+			//console.log(scrollValue);
+			$('.scroll>.box').text("scrollValue: " + scrollValue + 'px');
+		})
+
+		$('.discolourBox').on('mouseenter', function () {
+			$('.discolourBox').css({ "background-color": "red" })
+		})
+
+		$('.discolourBox').on('mouseleave', function () {
+			$('.discolourBox').css({ "background-color": "#FFFFFF" })
+		})
+
+		var $input = $('.input')
+
+		$input.on('focus', function () {
+			$input.css({ "border": "1px solid blue" });
+			$input.on('input', function () {
+				var inputText = $(this).val();
+				//console.log(inputText);
+				$(this).val(inputText.toUpperCase());
+			})
+		})
+		$input.on('focusout', function () {
+			$input.css({ "border": "1px solid red" });
+			console.log($(this).val());
+		})
+
+
+		$('.selectBox').on('change',function(){
+			console.log(1);
+			$('.box5>.select-p').text('用户选择的内容是:' + $(".selectBox option:selected").text());
+		});
+	</script>
+
+</body>
+
+</html>
