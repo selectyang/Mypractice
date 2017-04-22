@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+	<head>
+	<meta charset="utf-8">
+  <title>jQuer 天气预报</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: Arial,'Franklin Gothic Medium', 'Arial Narrow',  sans-serif;
+      font-size: 18px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .clearfix:afer {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+
+    a {
+      width: 50px;
+      background:  #aaa;;
+      padding: 10px;
+      margin: 3px;
+      border-radius: 3px;
+      color: antiquewhite;
+    }
+
+    .button {
+      background-color: #aaa; 
+      border: none;
+      color: white;
+      padding: 9px 20px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 3px;
+      display: inline-block;
+      font-size: 18px;
+    }
+
+    .weatimg {
+      width: 30px;
+    }
+
+    .weather>.img {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+      
+      
+
+  </style>
+</head>
+
+<body>
+  <div class="clearfixl">
+    <div class="weather-box">
+      <a href="#" class="city">深圳市X</a>
+      <a href="#" class="weather">
+        <span class="weat">多云x</span>
+        <sapn class="img"><img  class="weatimg" src="http://api.map.baidu.com/images/weather/day/zhenyu.png" alt=""></sapn>
+      </a>
+      <a href="#" class="pm25">PM2.5：40x</a>
+      <a href="#" class="index">舒适x</a>
+      <a href="#" class="temp">28 ~ 19℃x</a>
+      <a href="#" class="date">周五 04月21日x</a>
+      <button class="button">刷新</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+  <script>
+
+    var $button = $('.button'),
+        $city = $('.city'),
+        $weather = $('.weather>.weat'),
+        $weatImg = $('.weather>.img'),
+        $pm25 = $('.pm25'),
+        $index = $('.index'),
+        $temp = $('.temp'),
+        $date = $('.date');
+        
+    $(document).ready(function(){  
+        $button.trigger('click');  
+    });
+    
+    $button.on('click',function(e){
+      e.preventDefault();
+      $.ajax({
+        url: "http://api.jirengu.com/weather.php",
+        type: 'GET',
+        dataType: 'json',
+        data: {
+        },
+        success: function(news){
+          insetPage(news);
+        },
+        error: function(){
+          alert('系统异常');
+        }  
+      });
+    })
+
+
+    function insetPage(news) {
+      var fragment = document.createDocumentFragment()
+      if(news.status === 'success'){
+        window.node = news;
+        console.log(news.results[0].currentCity);
+        $city.text(news.results[0].currentCity);
+        $weather.text(news.results[0].weather_data[0].weather);
+        $weatImg.attr('src',news.results[0].weather_data[0].dayPictureUrl);
+        $pm25.text('PM2.5: ' + news.results[0].pm25);
+        $index.text(news.results[0].index[0].zs);
+        $temp.text(news.results[0].weather_data[0].temperature);
+        $date.text(news.results[0].weather_data[0].date)
+      }else {
+        alert('获取数据失败');
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>
+
