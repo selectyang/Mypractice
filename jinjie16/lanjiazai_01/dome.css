@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+}
+
+body,ul,li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.content {
+    width: 622px;
+    margin: 0 auto;
+}
+
+.content img {
+    width: 300px;
+    height: 240px;
+}
+
+.content >ul {
+    margin-left: -20px;
+}
+
+.content ul>li {
+    float: left;
+    margin-left: 20px; 
+    margin-bottom: 20px;
+}
+

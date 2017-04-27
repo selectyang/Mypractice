@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+	<head>
+		<meta charset="utf-8">
+		<title>我的项目</title>
+		<link rel="stylesheet" type="text/css" href="dome.css">
+	</head>
+	<body>
+		<div class="content ">
+			<ul class="container clearfix" >
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels1.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels2.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels3.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels4.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels5.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels6.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels7.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels8.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels9.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels10.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels11.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels12.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels13.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels14.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels15.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels16.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels17.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels18.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels19.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/blank.jpg" data-src="./img/pexels20.jpeg" alt=""></a></li>
+			</ul>
+		</div>
+	
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+		<script>
+			var clock;
+			// var a = 1,b = 1;
+
+			checkload('.container img');
+			
+			$(window).on('scroll',function(){
+				if(clock){
+					clearTimeout(clock);
+				}
+				clock = setTimeout(function(){
+					// console.log('a: ',a++)
+					// console.log('clock: ',clock)
+					checkload('.container img')
+				},100)
+
+
+			});
+
+			function checkload($node){
+				$($node).each(function(){
+					if(checkShow($(this)) && !isload($(this))){
+						loadImg($(this));
+					}
+				})
+			}
+
+			function checkShow ($img){
+				var windowHeight = $(window).height(),
+					scrollTop = $(window).scrollTop(),
+					offsetTop = $img.offset().top;
+				if(windowHeight + scrollTop > offsetTop && scrollTop < offsetTop + $img.outerHeight() ){
+					return true;
+				}
+					return false;
+			}
+
+			function loadImg($img){
+				// console.log('b: ',b++)
+				$img.attr('src',$img.attr('data-src'));	
+			}
+
+			function isload($img) {
+				return $img.attr('src') === $img.attr('data-src')
+			}
+
+
+		</script>
+	</body>
+</html>
