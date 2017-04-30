@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>自动循环轮播</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="carousel">
+			<ul class="img-content clearfix">
+				<li><a href="#"><img src="./img/pexels1.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/pexels2.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/pexels3.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/pexels4.jpeg" alt=""></a></li>
+			</ul>
+		</div>
+		<div class="button-content clearfix">
+			<a class="button pre" href="#">&#60</a>
+			<a class="button next" href="#">&#62</a>
+		</div>
+		<div class="bullet ">
+			<li class="active"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</div>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script>
+		var $buttonPre =  $('.pre'),
+				$buttonNext = $('.next'),
+				$imgCarousel = $('.carousel')
+				$imgContent = $('.img-content'),
+				$imgs = $('.img-content >li'),
+				$bullets = $('.bullet >li');
+			
+		var pageIndex = 0,
+				islock = true,
+				timeClock;
+
+		var imgLen = $imgs.length,
+				imgWidth = $imgs.width();
+
+
+		play(0);
+		autoPlay(1500);
+
+		function play(idx) {
+			if(!islock) return;
+			isclock = false;
+			$imgs.eq(pageIndex).fadeOut(500);
+			$imgs.eq(idx).fadeIn(500,function(){
+				islock = true;
+			});
+			pageIndex = idx;
+			setbullet();
+		}
+
+		function playNext(){
+			play((pageIndex+1)%imgLen)
+		}
+
+		function playPre(){
+			play((imgLen+pageIndex-1)%imgLen)
+			// console.log(pageIndex)
+		}
+
+		function autoPlay(time){
+			  timeClock = setInterval(function(){
+				playNext()
+			},time)
+		}
+
+		function stoPlay(){
+			clearInterval(timeClock)
+		}
+
+		$buttonPre.on('click',function(e){
+			e.preventDefault();
+			playPre();
+		})
+
+		$buttonNext.on('click',function(e){
+			e.preventDefault();
+			playNext();
+		})
+
+		$bullets.on('click',function(){
+			var index = $(this).index();
+			// console.log('index',index);
+				play(index)
+		})
+
+		function setbullet(){
+			// console.log('page',pageIndex)
+			$bullets.removeClass('active')
+							.eq(pageIndex)
+							.addClass('active')
+		}
+
+
+
+	</script>
+</body>
+
+</html>

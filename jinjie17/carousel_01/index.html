@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>无限循环轮播</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="carousel">
+			<ul class="img-content clearfix">
+				<li><a href="#"><img src="./img/pexels1.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/pexels2.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/pexels3.jpeg" alt=""></a></li>
+				<li><a href="#"><img src="./img/pexels4.jpeg" alt=""></a></li>
+			</ul>
+		</div>
+		<div class="button-content clearfix">
+			<a class="button pre" href="#">&#60</a>
+			<a class="button next" href="#">&#62</a>
+		</div>
+		<div class="bullet ">
+			<li class="active"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</div>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script>
+		var $buttonPre =  $('.pre'),
+				$buttonNext = $('.next'),
+				$imgCarousel = $('.carousel')
+				$imgContent = $('.img-content'),
+				$imgs = $('.img-content >li'),
+				$bullets = $('.bullet >li');
+			
+		var pageIndex = 0,
+				islock = true;
+
+		var imgLen = $imgs.length,
+				imgWidth = $imgs.width();
+
+		$imgContent.append($imgs.first().clone())
+		$imgContent.prepend($imgs.last().clone())
+		$imgContent.css('width',$('.img-content >li').length*imgWidth)
+
+		$imgContent.css('left',-imgWidth);
+
+		$buttonPre.on('click',function(e){
+			e.preventDefault();
+			if(islock)
+			playPre(1);
+		})
+
+		$buttonNext.on('click',function(e){
+			e.preventDefault();
+			if(islock)
+			playNext(1);
+		})
+
+		$bullets.on('click',function(){
+			var index = $(this).index();
+			//console.log('index',index);
+			if(index > pageIndex){
+				playNext(index-pageIndex);
+			}else if(index < pageIndex){
+				playPre(pageIndex-index);
+			}
+		})
+
+		function playNext(len) {
+			islock = false;
+			$imgContent.animate({
+				left: '-='+imgWidth*len
+			},function(){
+				pageIndex += len;
+				if(pageIndex === imgLen){
+					pageIndex = 0
+					$imgContent.css('left',-imgWidth)
+				}
+				islock = true;
+				setbullet()
+			})		
+		}
+
+		function playPre(len) {
+			islock = false;
+			$imgContent.animate({
+				left: '+='+imgWidth*len
+			},function(){
+				pageIndex -= len;
+				if(pageIndex<0){
+					pageIndex =imgLen-1 
+					$imgContent.css('left',-imgLen*imgWidth)
+				}
+				islock = true;
+				setbullet()
+			})		
+		}
+
+		function setbullet(){
+			//console.log('page',pageIndex)
+			$bullets.removeClass('active')
+							.eq(pageIndex)
+							.addClass('active')
+		}
+
+
+
+	</script>
+</body>
+
+</html>
