@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>瀑布流</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="item height1">1</div>
+		<div class="item height2">2</div>
+		<div class="item height1">3</div>
+		<div class="item height3">4</div>
+		<div class="item height2">5</div>
+		<div class="item height2">6</div>
+		<div class="item height3">7</div>
+		<div class="item height1">8</div>
+		<div class="item height1">9</div>
+		<div class="item height3">10</div>
+		<div class="item height2">11</div>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script>
+
+		
+
+	var waterfall = function(){
+		var cont = 0;
+		function render(){
+			var nodeWidth = $('.item').outerWidth(true)
+					nodeNum = parseInt($('.container').width()/nodeWidth),
+					nodeSumHeight = [];
+				
+			for(var i= 0; i< nodeNum; i++){
+				nodeSumHeight.push(0)
+			}
+
+			$('.item').each(function(){
+				var $cur = $(this),
+						index = 0,
+						minSumHeight = nodeSumHeight[0];
+						for(var i=0; i<nodeSumHeight.length; i++){
+							if(nodeSumHeight[i] < minSumHeight){
+								index = i;
+								minSumHeight = nodeSumHeight[i]
+								console.log('index:'+(cont++),index)
+							}
+						}
+						$cur.css({
+							left: nodeWidth*index,
+							top: minSumHeight
+						})
+						nodeSumHeight[index] += $cur.outerHeight(true); 
+						console.log(nodeSumHeight)
+			})
+		}
+		render();
+
+		$(window).on('resize',function(){
+			render();
+		})
+
+		return {
+			init: render
+		}
+	}
+
+	waterfall();
+
+	</script>
+</body>
+
+</html>

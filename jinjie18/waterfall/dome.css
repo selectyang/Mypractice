@@ -1,0 +1,34 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    position: relative;
+}
+
+.item {
+    position: absolute;
+    width: 200px;
+    margin: 10px 10px 0 0; 
+    transition: all 1s;
+}
+
+.height1 {
+    height: 200px;
+    background: #f4b311;
+}
+
+.height2 {
+    height: 300px;
+    background: #691BB0;
+}
+
+.height3 {
+    height: 400px;
+    background: #008A77;
+}
+
+
+
+
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>木桶布局</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<div class="img-content"> 
+		<!--<div class="img-row">
+			<div class="img-box">
+				<img src="http://placehold.it/75x78/1b4d21/fff" alt="">
+			</div>
+			<div class="img-box"></div>
+		</div>-->
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+	<script>
+
+	function Barrel($ct){
+		this.$ct = $ct;
+		this.rowList = [];
+		this.loadImg();
+	}
+
+	Barrel.prototype = {
+		loadImg: function(){
+			var _this= this;
+			var imgs = getImgUrls(50);
+
+			 $.each(imgs,function(idx, url){
+			// for(var i=0;i<imgs.length;i++){
+				var img = new Image();
+				img.src = url;
+				// img.src = imgs[i];
+				// console.log(img)
+				img.onload = function(){
+					var originWidth = img.width,
+            	originHeight = img.height,
+            	ratio = originWidth/originHeight;	 
+							// console.log('imgwidth:',originWidth)
+							// console.log('imgHeight:',originHeight)
+							// console.log('img:',ratio)
+					var imgInfo = {
+						target: img,
+						width: 200 * ratio,
+						height: 200
+					};
+					_this.render(imgInfo);
+				};
+			});
+		},
+
+		render: function(imgInfo){
+		  var _this = this;
+			var rowList = this.rowList;
+			var clientWidth = this.$ct.width(),
+					rowHeight = 0,
+			    rowWidth = 0,
+					lastImgInfo = imgInfo;
+
+					this.rowList.push(imgInfo);
+					// console.log('rowList',this.rowList)
+			for(var i=0;i<this.rowList.length;i++){//遍历，累加一行所有元素的宽度
+				rowWidth = rowWidth + this.rowList[i].width;
+				// console.log('rowWidth',rowWidth)
+				if(rowWidth > clientWidth){
+					rowList.pop();
+					rowWidth = rowWidth - lastImgInfo.width;
+					rowHeight = clientWidth*200/rowWidth; //通过宽高比相同的原理来求出新高度
+					_this.layout(rowHeight);
+					_this.rowList = [];
+					_this.rowList.push(imgInfo);
+				}
+			}
+
+		},
+
+		layout: function(rowHeight){
+			var $rowCt = $('<div class="img-row"></div>');
+			$.each(this.rowList,function(index,imgIfo){
+				var $imgCt = $('<div class="img-box"></div>'),
+						$img = $(imgIfo.target);
+						$img.height(rowHeight);
+						$imgCt.append($img);
+						$rowCt.append($imgCt);
+			});
+			this.$ct.append($rowCt); 
+		}
+
+	}
+
+	function getImgUrls(num) {  //创建随机大小图片
+      var color, width, height, urls = [];
+      for (var i = 0; i < num; i++) {
+        color = Math.random().toString(16).substring(2, 8);
+        width = Math.floor(Math.random() * 100 + 50);
+        height = Math.floor(Math.random() * 30 + 50);
+        urls.push("http://placehold.it/" + width + "x" + height + "/" + color + "/fff");
+      }
+      return urls;
+    }
+    
+		var barrels =  new Barrel($('.img-content'));
+
+	</script>
+</body>
+
+</html>
