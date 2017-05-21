@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>tab组件</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<div class="tab">
+		<ul class="tab-heard clearfix">
+			<li class="active">tab1</li>
+			<li>tab2</li>
+		</ul>
+		<ul class="tab-content">
+			<li class="active">内容1</li>
+			<li>内容2</li>
+		</ul>
+	</div>
+
+	<div class="tab">
+		<ul class="tab-heard clearfix">
+			<li class="active">tab1</li>
+			<li>tab2</li>
+			<li>tab3</li>
+		</ul>
+		<ul class="tab-content">
+			<li class="active">内容1</li>
+			<li>内容2</li>
+			<li>内容3</li>
+		</ul>
+	</div>
+
+	<div class="tab">
+		<ul class="tab-heard clearfix">
+			<li class="active">tab1</li>
+			<li>tab2</li>
+			<li>tab3</li>
+			<li>tab4</li>
+		</ul>
+		<ul class="tab-content">
+			<li class="active">内容1</li>
+			<li>内容2</li>
+			<li>内容3</li>
+			<li>内容4</li>
+		</ul>
+	</div>
+
+	<script>
+		function Tab(container) {
+			this.tabCt = container;
+			this.init();
+			this.bind();
+		}
+
+		Tab.prototype.init = function () {
+			this.tabheard = this.tabCt.querySelectorAll('.tab-heard>li');//返回的是数组，后面才能用forEach
+			this.tabcontent = this.tabCt.querySelectorAll('.tab-content>li');
+		}
+
+		Tab.prototype.bind = function () {
+			var _this = this;
+			this.tabheard.forEach(function (tabli) {
+				tabli.addEventListener('click', function (e) {
+					if (this.tagName === "LI") {
+						var index = [].indexOf.call(_this.tabheard, this)
+						_this.tabheard.forEach(function (li) {
+							li.classList.remove('active')
+						})
+						this.classList.add('active')
+					}
+					_this.tabcontent.forEach(function (content) {
+						content.classList.remove('active');
+					})
+					_this.tabcontent[index].classList.add('active');
+				})
+			})
+		}
+
+		new Tab(document.querySelectorAll('.tab')[0])
+		new Tab(document.querySelectorAll('.tab')[1])
+		new Tab(document.querySelectorAll('.tab')[2])
+	</script>
+
+</body>
+
+</html>

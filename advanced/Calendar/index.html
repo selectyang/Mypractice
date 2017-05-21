@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>日历组件</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+
+	<input type="text" class="date-input" placeholder="无初始值">
+	<input type="text" class="date-input" placeholder="无初始值">
+
+	<!--<div class="calendar">
+		<div class="header">
+			<span class="pre caret-left"></span>
+			<span class="current year">2017</span>
+			<span class="current">年</span>
+			<span class="current month">5</span>
+			<span class="current">月</span>
+			<span class="next caret-right"></span>
+		</div>	-->
+		<!--<table class="panel">
+			<thead>
+				<tr>
+					<th>日</th>
+					<th>一</th>
+					<th>二</th>
+					<th>三</th>
+					<th>四</th>
+					<th>五</th>
+					<th>六</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="pre-month">30</td>
+					<td class="cur-month cur-date">1</td>
+					<td class="cur-month">2</td>
+					<td class="cur-month">3</td>
+					<td class="cur-month">4</td>
+					<td class="cur-month">5</td>
+					<td class="cur-month">6</td>
+				</tr>
+				<tr>
+					<td class="cur-month">7</td>
+					<td class="cur-month">8</td>
+					<td class="cur-month">9</td>
+					<td class="cur-month">10</td>
+					<td class="cur-month">11</td>
+					<td class="cur-month">12</td>
+					<td class="cur-month">13</td>
+				</tr>
+				<tr>
+					<td class="cur-month">14</td>
+					<td class="cur-month">15</td>
+					<td class="cur-month">16</td>
+					<td class="cur-month">17</td>
+					<td class="cur-month">18</td>
+					<td class="cur-month">19</td>
+					<td class="cur-month">20</td>
+				</tr>
+				<tr>
+					<td class="cur-month">21</td>
+					<td class="cur-month">22</td>
+					<td class="cur-month">23</td>
+					<td class="cur-month">24</td>
+					<td class="cur-month">25</td>
+					<td class="cur-month">26</td>
+					<td class="cur-month">27</td>
+				</tr>
+				<tr>
+					<td class="cur-month">28</td>
+					<td class="cur-month">29</td>
+					<td class="cur-month">30</td>
+					<td class="cur-month">31</td>
+					<td class="pre-month">1</td>
+					<td class="pre-month">2</td>
+					<td class="pre-month">3</td>
+				</tr>
+
+			</tbody>
+		</table>-->
+	<!--</div>-->
+
+
+
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>
+
+			function Calendar($target){
+					this.input = $target;
+					this.initDate();
+					this.bindEvents();
+				}
+				
+				Calendar.prototype = {
+					initDate: function(){
+						this.currentDate = new Date();
+						this.date = new Date;
+						var message = this.newCalendar(this.date);
+						this.render();
+						this.setNavDate(message);
+						this.setDate(message);
+					} ,
+
+					newCalendar: function(date){//生成日历所需的数据
+						var month = date.getMonth(),
+								year = date.getFullYear(),
+								date = date.getDate(),
+								whichMonthDay = new Date(year,month,1),
+								monthFirstDay = whichMonthDay.getDay(),// 一号是周几
+								monthFirstDate = new Date(year,month,-monthFirstDay); //当月日历页面第一天是重那天开始（+1）
+						var message = {
+								month: month,
+								year: year,
+								date: date,
+								whicMonthDay: whichMonthDay,
+								monthFirstDay: monthFirstDay,
+								monthFirstDate: monthFirstDate,
+								dateString: year + '/' + (month+1) + '/' + date
+						} 
+						return message;
+					},
+
+				 render:	function(){//渲染日历nva部分
+						var tempHtml = '<div class="calendar " style="display:none">'
+								+ '<div class="header"><span class="pre caret-left"></span>'
+								+ '<span class="current year">2017</span><span class="current">年</span>'
+								+ '<span class="current month">5</span><span class="current">月</span>'
+								+ '<span class="next caret-right"></span></div>'
+								+ '<table class="panel"><thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>'
+								+ '</table></div>';
+						this.$tempHtml = $(tempHtml);
+						this.$tempHtml.insertAfter(this.input).css({
+							'position':'absolute',
+							'left': this.input.offset().left,
+							'top' : this.input.offset().top +this.input.height(true)
+						});		
+					},
+
+				 setNavDate:	function(options){//设置日历nav部分显示的数据
+							var year = options.year,
+									month = options.month,
+									date = options.date;
+							this.$tempHtml.find('.year').text(year);
+							this.$tempHtml.find('.month').text(month+1);
+							this.currentDate.setFullYear(year);
+							this.currentDate.setMonth(month);
+							this.currentDate.setDate(date);
+					 },
+
+				setDate: function(options){//渲染日历日期部分
+						var firstDate = options.monthFirstDate;
+						var date = firstDate.getDate();
+						var tableHtml = '';
+						this.$tempHtml.find('tbody').remove();
+						for(var i=0;i<6;i++){
+							tableHtml += '<tr">';
+							for(var j=0;j<7;j++){
+								firstDate.setDate(++date);
+								date = firstDate.getDate();
+								if((i==0 && date >8)||(i>=4 && date < 12)){
+									tableHtml += '<td class="pre-month">'+ date +'</td>';
+								}else{
+									tableHtml += '<td class="cur-month">'+ date +'</td>';
+								}
+							}
+							tableHtml += '</tr>';
+						}
+						console.log( options.date)
+						this.$tempHtml.find('.panel').append(tableHtml); 
+						this.$tempHtml.find('.cur-month').eq(this.currentDate.getDate()-1).addClass('cur-date');
+						//对选中的日期添加样式
+					},
+				
+
+				bindEvents: function(){//事件监听
+					var _this = this;
+					//对月份的增减事件监听
+					this.$tempHtml.find('.pre').on('click',function(){
+						console.log(1)
+						if(_this.currentDate.getMonth() === 0){
+							_this.currentDate.setFullYear(_this.currentDate.getFullYear() - 1);
+							_this.currentDate.setMonth(11);
+						} else {
+							_this.currentDate.setMonth(_this.currentDate.getMonth() - 1);
+						}
+						var message = _this.newCalendar(_this.currentDate);
+						_this.setNavDate(message);
+						_this.setDate(message);
+					});
+					this.$tempHtml.find('.next').on('click',function(){
+						if(_this.currentDate.getMonth() === 12){
+							_this.currentDate.setFullYear(_this.currentDate.getFullYear() + 1);
+							_this.currentDate.setMonth(0);
+						} else {
+							_this.currentDate.setMonth(_this.currentDate.getMonth() + 1);
+						}
+						var message = _this.newCalendar(_this.currentDate);
+						_this.setNavDate(message);
+						_this.setDate(message);
+					});
+					//事件代理，监听单个日期上的点击事件
+					this.$tempHtml.find('.panel').on('click','.cur-month',function(e){
+						var target = e.target;
+						if(target.tagName==="TD" && $(target).html()){
+							_this.currentDate.setDate(parseInt(($(target).text()),10))
+							var message = _this.newCalendar(_this.currentDate);
+							_this.input.val(message.dateString)
+							_this.setDate(message);
+							_this.$tempHtml.hide();
+						}
+					})
+					//input触发显示日历
+					this.input.on('click',function(e){
+						e.stopPropagation();
+						_this.$tempHtml.show();
+					})
+				}
+			}
+
+
+   $('.date-input').each(function(){
+   	 new Calendar($(this));
+  	})
+
+
+
+	</script>
+
+</body>
+
+</html>

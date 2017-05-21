@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+	<meta charset="utf-8">
+	<title>modal组件</title>
+	<link rel="stylesheet" type="text/css" href="dome.css">
+</head>
+
+<body>
+	<button class="open1"> 打开1 </button>
+	<button class="open2"> 打开2 </button>
+	<button class="open3"> 打开3 </button>
+	<button class="open4"> 打开4 </button>
+
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>
+
+	var Dialog = (function(){
+			function Modal(){
+				this.createDialog();
+				this.bindEvent();
+			}
+		
+
+		Modal.prototype = {
+			defaultOpts: {
+				title: '',
+				message: '', 
+				isShowCloseBtn: true,//控制close按钮是否显示，默认显示
+				isShowOkBtn: false,//控制ok按钮是否显示，默认不显示
+				onClose: function(){},
+				onOk: function(){},
+			},
+
+			open: function(opts){
+				this.setOpts(opts);
+				this.setDialog();
+				this.showDialog();
+			},
+
+			setOpts: function(opts){
+				if(typeof opts === 'string'){
+					this.opts = $.extend({},this.defaultOpts,{message:opts});
+				} else if(typeof opts === 'object'){
+					this.opts = $.extend({},this.defaultOpts,opts);
+				}
+				// console.log(this.opts)
+			},
+
+			setDialog: function(){
+				if(!this.opts.title){
+					this.$dialog.find('.DialogHeader').hide();
+				}else{
+					this.$dialog.find('.DialogHeader').show();
+				}
+				if(!this.opts.isShowCloseBtn){
+					this.$dialog.find('.DialogFooter .close').hide();
+				} else {
+					this.$dialog.find('.DialogFooter .close').show();
+				}
+				if(!this.opts.isShowOkBtn){
+					this.$dialog.find('.DialogFooter .ok').hide();
+				} else {
+					this.$dialog.find('.DialogFooter .ok').show();
+				}
+				this.$dialog.find('.DialogHeader h3').text(this.opts.title);
+				this.$dialog.find('.DialogContent').html(this.opts.message);
+				// console.log(this.opts.message)
+			},
+
+			createDialog: function(){
+				var tpl = '<div class="dialog" style="display:none">'
+								+ '<div class="DialogMask">'
+								+ '<div class="DialogBox">'
+								+ '<div class="DialogHeader"><h3></h3><span class="close">x</span></div>'
+								+ '<div class="DialogContent"></div>'
+								+ '<div class="DialogFooter"><a href="#" class="btn close">取消</a><a href="#" class="btn ok">确定</a></div>'
+								+ '</div></div>';
+				this.$dialog = $(tpl);
+				$('body').append(this.$dialog); 
+			},
+
+			bindEvent: function(){
+				var _this = this;
+				this.$dialog.find('.close').on('click',function(e){
+					e.preventDefault();
+					_this.opts.onClose();
+					_this.hideDialog();
+				});
+				this.$dialog.find('.ok').on('click',function(e){
+					e.preventDefault();
+					_this.opts.onOk();
+					_this.hideDialog();
+				})
+			},
+
+			showDialog: function(){
+				this.$dialog.show();
+			},
+
+			hideDialog: function(){
+				this.$dialog.hide();
+			},
+		}
+		return new Modal();
+	})();
+
+
+  //只在content 传入纯文本
+	$('.open1').on('click',function(){
+		Dialog.open('hello, 这是互联网的世界!')
+	})
+
+	//在content 中传人 html
+	$('.open2').on('click',function(){
+		Dialog.open('<a href="http://www.baidu.com">baidu</a>')
+	})
+
+	//传入对象
+	$('.open3').on('click',function(){
+		Dialog.open({
+			title: '欢迎来到前端世界！',
+			message: 'welcome to the world of It !',
+			isShowCloseBtn: true,
+			isShowOkBtn: true,
+			onClose: function(){
+				alert('close');
+			},
+			onOk: function(){
+				alert('OK')
+			}
+		})
+	})
+
+  //传入带html的对象
+	var tempHtml = '<ul><li>list1</li><li>list2</li><li>list3</li><li>list4</li></ul>'
+	$('.open4').on('click',function(){
+		Dialog.open({
+			title: '欢迎来到前端世界！',
+			message: tempHtml,
+			isShowCloseBtn: true,
+			isShowOkBtn: false,
+			onClose: function(){
+				alert('close');
+			},
+			onOk: function(){
+				alert('OK')
+			}
+		})
+	})
+
+
+
+	</script>
+</body>
+
+</html>
