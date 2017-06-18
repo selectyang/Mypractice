@@ -1,3 +1,4 @@
+define(['jquery'], function($){		
 		var Carousel = (function(){
 			function _Carousel($container){
 				this.container = $container;
@@ -57,49 +58,51 @@
 			},time)
 		}
 
-			_Carousel.prototype.playNext = function(len){
-				var _this = this;
-				this.islock = false;
-				this.$imgContent.animate({
-					left: '-='+_this.imgWidth*len
-				},function(){
-					_this.pageIndex += len;
-					if(_this.pageIndex === _this.imgLen){
-						_this.pageIndex = 0
-						_this.$imgContent.css('left',-_this.imgWidth)
-					}
-					_this.islock = true;
-					_this.setbullet()
-				})				
-			}
+		_Carousel.prototype.playNext = function(len){
+			var _this = this;
+			this.islock = false;
+			this.$imgContent.animate({
+				left: '-='+_this.imgWidth*len
+			},function(){
+				_this.pageIndex += len;
+				if(_this.pageIndex === _this.imgLen){
+					_this.pageIndex = 0
+					_this.$imgContent.css('left',-_this.imgWidth)
+				}
+				_this.islock = true;
+				_this.setbullet()
+			})				
+		}
 
-			_Carousel.prototype.playPre = function(len){
-				var _this = this;
-				_this.islock = false;
-				this.$imgContent.animate({
-					left: '+='+_this.imgWidth*len
-				},function(){
-					_this.pageIndex -= len;
-					if(_this.pageIndex<0){
-						_this.pageIndex =_this.imgLen-1 
-						_this.$imgContent.css('left',-_this.imgLen*_this.imgWidth)
-					}
-					_this.islock = true;
-					_this.setbullet()
+		_Carousel.prototype.playPre = function(len){
+			var _this = this;
+			_this.islock = false;
+			this.$imgContent.animate({
+				left: '+='+_this.imgWidth*len
+			},function(){
+				_this.pageIndex -= len;
+				if(_this.pageIndex<0){
+					_this.pageIndex =_this.imgLen-1 
+					_this.$imgContent.css('left',-_this.imgLen*_this.imgWidth)
+				}
+				_this.islock = true;
+				_this.setbullet()
+			})
+		}
+
+		_Carousel.prototype.setbullet = function(){
+			this.$bullets.removeClass('active')
+							.eq(this.pageIndex)
+							.addClass('active')			
+		}
+
+		return {
+			init: function($ct){
+				$ct.each(function(index,node){
+					new _Carousel($(node));
 				})
 			}
-
-			_Carousel.prototype.setbullet = function(){
-				this.$bullets.removeClass('active')
-								.eq(this.pageIndex)
-								.addClass('active')			
-			}
-
-			return {
-				init: function($ct){
-					$ct.each(function(index,node){
-						new _Carousel($(node));
-					})
-				}
-			}
-		})()
+		}
+	})()
+	return Carousel;
+})

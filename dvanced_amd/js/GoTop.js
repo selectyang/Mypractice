@@ -1,4 +1,5 @@
-var GoTop = (function(){
+define(['jquery'], function($){	
+ var GoTop = (function(){
 	function _GoTop($ct){
 		this.ct = $ct;
 		this.target = $('<p class="gotop">GoTop</p>');
@@ -29,12 +30,11 @@ var GoTop = (function(){
 
 	return {
 		init: function($ct){
-				new _GoTop($ct);
+			new _GoTop($ct);
 		}
 	}
-
-	})()
-
-
+  })()
+  return GoTop;
+})
 
 	
