@@ -49,6 +49,13 @@ define(['jquery'], function($){
 						_this.playPre(_this.pageIndex-index);
 					}
 				})
+				$(window).resize(function() {
+					console.log('resize_start')
+					_this.$imgContent.css('width',$('.img-content img').length* window.innerWidth)
+					_this.container.find('.img-content img').width(window.innerWidth);
+					console.log(_this.$imgContent,$('.img-content img').length* window.innerWidth)
+					console.log('resize_end')
+				})
 			}
 
 		_Carousel.prototype.autoPlay = function(time){
@@ -62,12 +69,12 @@ define(['jquery'], function($){
 			var _this = this;
 			this.islock = false;
 			this.$imgContent.animate({
-				left: '-='+_this.imgWidth*len
+				left: '-='+window.innerWidth*len
 			},function(){
 				_this.pageIndex += len;
 				if(_this.pageIndex === _this.imgLen){
 					_this.pageIndex = 0
-					_this.$imgContent.css('left',-_this.imgWidth)
+					_this.$imgContent.css('left',-window.innerWidth)
 				}
 				_this.islock = true;
 				_this.setbullet()
@@ -78,12 +85,12 @@ define(['jquery'], function($){
 			var _this = this;
 			_this.islock = false;
 			this.$imgContent.animate({
-				left: '+='+_this.imgWidth*len
+				left: '+='+window.innerWidth*len
 			},function(){
 				_this.pageIndex -= len;
 				if(_this.pageIndex<0){
 					_this.pageIndex =_this.imgLen-1 
-					_this.$imgContent.css('left',-_this.imgLen*_this.imgWidth)
+					_this.$imgContent.css('left',-_this.imgLen*window.innerWidth)
 				}
 				_this.islock = true;
 				_this.setbullet()
