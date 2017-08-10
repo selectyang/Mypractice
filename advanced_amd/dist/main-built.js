@@ -8,11 +8,12 @@ define('js/Carousel',['jquery'], function($){
 			function _Carousel($container){
 				this.container = $container;
 				this.init();
+				this.resize();
 				this.bind();
 				this.autoPlay(3000);
 			}
 
-			_Carousel.prototype.init = function(){
+		_Carousel.prototype.init = function(){
 				var $buttonPre = this.$buttonPre = this.container.find('.pre'),
 					$buttonNext = this.$buttonNext = this.container.find('.next'),
 					$imgCarousel = this.$imgCarousel = this.container.find('.carousel')
@@ -24,16 +25,17 @@ define('js/Carousel',['jquery'], function($){
 				this.islock = true;
 
 				this.imgLen = $imgs.length;
+				//设置图片初始宽度= 窗口宽度
 				this.$imgs.width(window.innerWidth);
-				this.imgWidth = $imgs.width();
 
 				$imgContent.append($imgs.first().clone())
 				$imgContent.prepend($imgs.last().clone())
-				$imgContent.css('width',$('.img-content img').length*this.imgWidth)
-				$imgContent.css('left',-this.imgWidth);			
+				//设置轮播容器初始宽度
+				$imgContent.css('width',$('.img-content img').length*(window.innerWidth))
+				$imgContent.css('left',-window.innerWidth);			
 			}
 
-			_Carousel.prototype.bind = function(){
+		_Carousel.prototype.bind = function(){
 				var _this = this;
 				this.$buttonPre.on('click',function(e){
 					e.preventDefault();
@@ -54,14 +56,20 @@ define('js/Carousel',['jquery'], function($){
 						_this.playPre(_this.pageIndex-index);
 					}
 				})
-				$(window).resize(function() {
-					console.log('resize_start')
-					_this.$imgContent.css('width',$('.img-content img').length* window.innerWidth)
-					_this.container.find('.img-content img').width(window.innerWidth);
-					console.log(_this.$imgContent,$('.img-content img').length* window.innerWidth)
-					console.log('resize_end')
-				})
 			}
+		//窗口改变是从新设置轮播图大小	
+		_Carousel.prototype.resize = function(){
+			var _this =this
+			$(window).resize(function() {
+				//console.log('resize_start')
+				_this.container.find('.img-content img').width(window.innerWidth);//设置改变窗口后的图片宽度
+				_this.$imgContent.css('width',$('.img-content img').length* window.innerWidth)//设置改变窗口后轮播容器的宽度
+				_this.$imgContent.css('left',-window.innerWidth);	//设置新的轮播距离
+				//console.log(_this.$imgContent,$('.img-content img').length* window.innerWidth)
+				//console.log('resize_end')
+			})	
+		}	
+		
 
 		_Carousel.prototype.autoPlay = function(time){
 			var _this = this;
