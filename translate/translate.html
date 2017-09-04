@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	   <script>
+		var scale = 1 / window.devicePixelRatio // 1\2\3
+		document.write(`
+		<meta name="viewport"
+			content="initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}, user-scalable=no"> 
+		`)
+    </script> 
+    <script>
+		var width = document.documentElement.clientWidth / window.devicePixelRatio
+		var css = `
+		html{
+		font-size: ${width / 10 * window.devicePixelRatio}px;
+		}
+		`
+		document.write(`<style>${css}</style>`)
+    </script>  
+	 <!-- <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">  -->
+	<link rel="stylesheet" href="./css/main.css">
+	  <!-- <link rel="stylesheet" href="./css/bootstrap.min.css">   -->
+	<title>translate</title>
+</head>
+<body>
+	<div class="translate">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="input-group translate_input">
+					<input type="text" class="form-control input" placeholder="Searching words...">
+					<span class="input-group-btn">
+						<span class="btn btn-default submit" type="button">Go!</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title queryText">Panel title</h3>
+			</div>
+			<div class="panel-body">
+				<div class="play">
+					美 : <span class="usPlay"></span>
+					<button class="playUs"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
+					英 : <span class="ukPlay"></span> 
+					<button class="playUk"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>	
+				</div>	
+			</div>
+
+			<div class="translate_output">
+				<div class="panel-heading">
+					<h3 class="panel-title">基本释义</h3>
+				</div>
+				<div class="panel-body">
+					<ul class="explains">
+					</ul>
+				</div>
+				<div class="panel-heading">
+					<h3 class="panel-title">网络释义</h3>
+				</div>
+				<div class="panel-body">
+					<ul class="web_explains">
+					</ul>
+				</div>				
+			</div>
+		</div>
+	</div>
+	 <!-- <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script> 
+	<script src="./js/bootstrap.min.js"></script> -->
+	<script src="./js/index.js"></script>
+</body>
+</html>
