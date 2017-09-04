@@ -101,7 +101,7 @@ translate.prototype.bind = function(){
 	function ajax_event(e) {
 		let query = document.querySelector(".input").value
 		_this.ajax({
-			url: 'http://fanyi.youdao.com/openapi.do',
+			url: 'https://fanyi.youdao.com/openapi.do',
 			key: 'jsoncallback',
 			data: {
 				callback: 'showData',
