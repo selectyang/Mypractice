@@ -1,8 +1,23 @@
+@charset "UTF-8";
 *, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 0.5rem; }
+  font-size: 0.5rem;
+  font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", sans-serif; }
+
+.icon {
+  /* 通过设置 font-size 来改变图标大小 */
+  width: 1em;
+  height: 1em;
+  /* 图标和文字相邻时，垂直对齐 */
+  vertical-align: -0.15em;
+  /* 通过设置 color 来改变 SVG 的颜色/fill */
+  fill: currentColor;
+  /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
+      normalize.css 中也包含这行 */
+  overflow: hidden;
+  color: #007acc; }
 
 ul, li {
   list-style: none;
@@ -11,7 +26,7 @@ ul, li {
 .translate {
   margin-top: 0.09375rem; }
   .translate .input-group {
-    border: 1px solid #111;
+    border: 1px solid #007acc;
     padding: 0.09375rem 0;
     border-radius: 0.09375rem; }
   .translate .form-control {
@@ -20,7 +35,7 @@ ul, li {
     padding: 0 0.15625rem;
     line-height: 1rem; }
   .translate .input-group-btn {
-    border-left: 1px solid #888;
+    border-left: 1px solid #007acc;
     width: 1.40625rem;
     text-align: center;
     padding: 0.1875rem 0.15625rem; }
@@ -29,15 +44,15 @@ ul, li {
   .translate .panel-default {
     display: none; }
   .translate .panel {
-    margin-top: 0.09375rem;
-    border: 1px solid #111;
+    margin-top: 0.15625rem;
+    border: 1px solid #007acc;
     border-radius: 0.09375rem; }
     .translate .panel li {
-      border-bottom: 1px solid #888; }
+      border-bottom: 1px solid #007acc; }
     .translate .panel .panel-heading {
       padding: 0.3125rem 0.15625rem;
-      background: #eee;
-      border-bottom: 1px solid #888; }
+      background: #dfdbdb;
+      border-bottom: 1px solid #007acc; }
     .translate .panel .panel-body {
       padding: 0.3125rem 0.15625rem; }
     .translate .panel .translate_output li {

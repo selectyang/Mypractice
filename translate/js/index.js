@@ -9,13 +9,15 @@ function showData(data) {
 		for(let i=0; i<node_list.length; i++){
 			node_list[i].parentNode.removeChild(node_list[i])
 		}
-	}	
-	document.querySelector(".usPlay").innerText = "[" + data.basic['us-phonetic'] + "]"
-	document.querySelector(".ukPlay").innerText = "[" + data.basic['uk-phonetic'] + "]"
-	document.querySelector(".queryText").innerText = data.query
-	explains(data)
-	webExplains(data)
-	isShow(data)
+	}
+	document.querySelector(".queryText").innerText = data.query	
+	if(data.basic['us-phonetic']){
+		document.querySelector(".usPlay").innerText = "[" + data.basic['us-phonetic'] + "]"
+		document.querySelector(".ukPlay").innerText = "[" + data.basic['uk-phonetic'] + "]"
+	}
+	explains(data)//渲染基本释义数据
+	webExplains(data)//渲染网络释义数据
+	isShow(data)//展示渲染好的数据
 }
 //显示基本释义
 function explains(data) {
@@ -35,7 +37,7 @@ function webExplains(data) {
 								<p>${WebExplains[i].value}</p></li>`)
 	}
 }
-//
+//获取数据后展示结果
 function isShow(data){
 	if(data){
 		panel.classList.remove('panel-default')
@@ -99,6 +101,7 @@ translate.prototype.bind = function(){
 	//提交数据
 	let _this = this
 	function ajax_event(e) {
+		document.querySelector('.panel').classList.add('panel-default')//提交前隐藏上一次显示内容
 		let query = document.querySelector(".input").value
 		_this.ajax({
 			url: 'https://fanyi.youdao.com/openapi.do',
@@ -115,6 +118,7 @@ translate.prototype.bind = function(){
 			callback: showData
 		})
 	}
+
 	document.querySelector('.submit').addEventListener('click', ajax_event)
 	document.querySelector('.submit').addEventListener('keypress', ajax_event)
 	//美式发声
